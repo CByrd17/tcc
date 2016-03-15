@@ -3,8 +3,9 @@
  */
 package tcc.srm146.div2;
 
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -21,19 +22,28 @@ public class Yahtzee {
 	public final int maxPoints(final int[] toss) {
 		final Map<Integer, Integer> points = new ConcurrentHashMap<Integer, Integer>();
 
-		Integer key;
 		for (final int i : toss) {
-			key = Integer.valueOf(i);
+			final Integer key = Integer.valueOf(i);
 			if (points.containsKey(key)) {
 				points.replace(key, points.get(key) + key);
 			} else {
 				points.put(key, key);
 			}
 		}
-		
-		
 
-		return 5;
+		Iterator<Entry<Integer, Integer>> it = points.entrySet().iterator();
+		int topScore = 0;
+		int topValue = 0;
+		while (it.hasNext()) {
+			final Entry<Integer, Integer> pair = (Entry<Integer, Integer>) it
+					.next();
+			if (pair.getValue() > topScore) {
+				topScore = pair.getValue();
+				topValue = pair.getKey();
+			}
+		}
+
+		return topValue;
 	}
 
 }
