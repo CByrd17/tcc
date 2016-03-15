@@ -4,7 +4,7 @@ package tcc.srm145.div2;
  * @author cbyrd17
  *
  */
-public class DitherCounter {
+public class ImageDithering {
 
 	/**
 	 * @param dithered

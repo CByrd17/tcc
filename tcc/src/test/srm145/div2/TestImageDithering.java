@@ -4,12 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import tcc.srm145.div2.DitherCounter;
+import tcc.srm145.div2.ImageDithering;
 
-public class TestDitherCounter {
+public class TestImageDithering {
 	@Test
 	public void testCount0() {
-		DitherCounter dc = new DitherCounter();
+		ImageDithering dc = new ImageDithering();
 
 		String ditheredSeed = "BW";
 
@@ -24,7 +24,7 @@ public class TestDitherCounter {
 
 	@Test
 	public void testCount1() {
-		DitherCounter dc = new DitherCounter();
+		ImageDithering dc = new ImageDithering();
 
 		String ditheredSeed = "BW";
 
@@ -39,7 +39,7 @@ public class TestDitherCounter {
 
 	@Test
 	public void testCount2() {
-		DitherCounter dc = new DitherCounter();
+		ImageDithering dc = new ImageDithering();
 
 		String ditheredSeed = "ACEGIKMOQSUWY";
 
@@ -59,7 +59,7 @@ public class TestDitherCounter {
 
 	@Test
 	public void testCount3() {
-		DitherCounter dc = new DitherCounter();
+		ImageDithering dc = new ImageDithering();
 
 		String ditheredSeed = "CA";
 
@@ -73,7 +73,7 @@ public class TestDitherCounter {
 
 	@Test
 	public void testCount4() {
-		DitherCounter dc = new DitherCounter();
+		ImageDithering dc = new ImageDithering();
 
 		String ditheredSeed = "DCBA";
 
