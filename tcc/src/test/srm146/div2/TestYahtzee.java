@@ -39,4 +39,16 @@ public class TestYahtzee {
 		assertEquals(expected, result);
 	}
 
+	@Test
+	public void testMaxPoints2() {
+		Yahtzee y = new Yahtzee();
+
+		int[] seed = { 5, 3, 5, 3, 3 };
+
+		int expected = 10;
+		int result = y.maxPoints(seed);
+
+		assertEquals(expected, result);
+	}
+
 }
