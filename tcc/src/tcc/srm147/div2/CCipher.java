@@ -8,12 +8,6 @@ package tcc.srm147.div2;
  *
  */
 public class CCipher {
-	/**
-	 * Public constructor.
-	 */
-	public CCipher() {
-		// Generic
-	}
 
 	/**
 	 * @param cipherChar
@@ -24,13 +18,12 @@ public class CCipher {
 	 *         shift, wrapping from Z to A if necessary
 	 */
 	public final char decodeALetter(final char cipherChar, final int shift) {
-		char decoded = (char) (cipherChar - shift);
-
+		int decoded = (cipherChar - shift);
 		if (decoded < 'A') {
-			decoded = (char) ('Z' - 'A' - decoded + 1);
+			decoded = 'A' - decoded;
+			decoded = ('Z' - decoded + 1);
 		}
-
-		return decoded;
+		return (char) decoded;
 	}
 
 	/**
@@ -43,12 +36,12 @@ public class CCipher {
 	 *         the value of shift, wrapping from Z to A if necessary
 	 */
 	public final String decode(final String cipherText, final int shift) {
-		String decoded = "";
+		final StringBuffer decoded = new StringBuffer("");
 
-		for (char c : cipherText.toCharArray()) {
-			decoded += Character.toString(decodeALetter(c, shift));
+		for (final char c : cipherText.toCharArray()) {
+			decoded.append(decodeALetter(c, shift));
 		}
 
-		return decoded;
+		return decoded.toString();
 	}
 }
