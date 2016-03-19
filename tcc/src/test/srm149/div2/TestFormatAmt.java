@@ -15,6 +15,9 @@ import tcc.srm149.div2.FormatAmt;
  */
 public class TestFormatAmt {
 
+	/**
+	 * 
+	 */
 	@Test
 	public final void testAmount0() {
 		FormatAmt formatAmount = new FormatAmt();
@@ -28,6 +31,9 @@ public class TestFormatAmt {
 		assertEquals(expected, result);
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	public final void testAmount1() {
 		FormatAmt formatAmount = new FormatAmt();
@@ -40,5 +46,48 @@ public class TestFormatAmt {
 
 		assertEquals(expected, result);
 	}
+	
+	/**
+	 * 
+	 */
+	@Test
+	public final void testMod() {
+		final int seedDollars = 1;
+		final int seedCents = 3;
+
+		final int expected = 1;
+		final int result = seedDollars % seedCents;
+
+		assertEquals(expected, result);
+	}
+	
+	/**
+	 * 
+	 */
+	@Test
+	public final void testMod2() {
+		final int seedDollars = 2;
+		final int seedCents = 3;
+
+		final int expected = 2;
+		final int result = seedDollars % seedCents;
+
+		assertEquals(expected, result);
+	}
+	
+	/**
+	 * 
+	 */
+	@Test
+	public final void testMod3() {
+		final int seedDollars = 3;
+		final int seedCents = 3;
+
+		final int expected = 0;
+		final int result = seedDollars % seedCents;
+
+		assertEquals(expected, result);
+	}
+
 
 }
