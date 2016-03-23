@@ -18,24 +18,31 @@ public class FormatAmt {
 	 */
 	private static final int MAX_SIZE_COMMA_SEPARATED_GROUPINGS = 3;
 
+	/**
+	 * @param dollars
+	 *            will be between 0 and 2,000,000,000 inclusive
+	 * @param cents
+	 *            will be between 0 and 99 inclusive
+	 * @return the properly formatted String
+	 */
 	public final String amount(final int dollars, final int cents) {
 		final StringBuilder amount = new StringBuilder("$");
 
-		if (dollars < 0) {
-			amount.append("0");
+		if (dollars <= 0) {
+			amount.append('0');
 		} else {
-			String dollar = String.valueOf(dollars);
-			int initialSet = dollar.length()
+			final String dollar = String.valueOf(dollars);
+			final int initialSet = dollar.length()
 					% MAX_SIZE_COMMA_SEPARATED_GROUPINGS;
 			switch (initialSet) {
 			case 1:
 				amount.append(dollar.charAt(0));
-				amount.append(",");
+				amount.append(',');
 				break;
 			case 2:
 				amount.append(dollar.charAt(0));
 				amount.append(dollar.charAt(1));
-				amount.append(",");
+				amount.append(',');
 				break;
 			default:
 				break;

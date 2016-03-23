@@ -20,7 +20,7 @@ public class TestFormatAmt {
 	 */
 	@Test
 	public final void testAmount0() {
-		FormatAmt formatAmount = new FormatAmt();
+		final FormatAmt formatAmount = new FormatAmt();
 
 		final int seedDollars = 123456;
 		final int seedCents = 0;
@@ -36,7 +36,7 @@ public class TestFormatAmt {
 	 */
 	@Test
 	public final void testAmount1() {
-		FormatAmt formatAmount = new FormatAmt();
+		final FormatAmt formatAmount = new FormatAmt();
 
 		final int seedDollars = 49734321;
 		final int seedCents = 9;
@@ -46,7 +46,55 @@ public class TestFormatAmt {
 
 		assertEquals(expected, result);
 	}
-	
+
+	/**
+	 * 
+	 */
+	@Test
+	public final void testAmount2() {
+		final FormatAmt formatAmount = new FormatAmt();
+
+		final int seedDollars = 0;
+		final int seedCents = 99;
+
+		final String expected = "$0.99";
+		final String result = formatAmount.amount(seedDollars, seedCents);
+
+		assertEquals(expected, result);
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	public final void testAmount3() {
+		final FormatAmt formatAmount = new FormatAmt();
+
+		final int seedDollars = 249;
+		final int seedCents = 30;
+
+		final String expected = "$249.30";
+		final String result = formatAmount.amount(seedDollars, seedCents);
+
+		assertEquals(expected, result);
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	public final void testAmount4() {
+		final FormatAmt formatAmount = new FormatAmt();
+
+		final int seedDollars = 1000;
+		final int seedCents = 1;
+
+		final String expected = "$1,000.01";
+		final String result = formatAmount.amount(seedDollars, seedCents);
+
+		assertEquals(expected, result);
+	}
+
 	/**
 	 * 
 	 */
@@ -60,7 +108,7 @@ public class TestFormatAmt {
 
 		assertEquals(expected, result);
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -74,7 +122,7 @@ public class TestFormatAmt {
 
 		assertEquals(expected, result);
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -88,6 +136,5 @@ public class TestFormatAmt {
 
 		assertEquals(expected, result);
 	}
-
 
 }
