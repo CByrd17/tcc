@@ -53,7 +53,7 @@ public class TestBinaryCode {
 		final String seed = "123210122";
 
 		final String expected = "NONE";
-		final String result = binaryCode.decodeAssumeZero(seed);
+		final String result = binaryCode.decodeAssumeOne(seed);
 
 		assertEquals(expected, result);
 	}

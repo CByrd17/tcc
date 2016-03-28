@@ -43,6 +43,11 @@ public class BinaryCode {
 			int encryptedInt = Character
 					.getNumericValue(encryptedMessage[current]);
 			right = encryptedInt - left - now;
+			System.out.println("message " + message);
+			System.out.println(
+					"decryptedMessage: " + decryptedMessage.toString());
+			System.out.println(
+					"left " + left + " now " + now + " right " + right);
 			if (right < now) {
 				decryptedMessage = new StringBuffer("NONE");
 				break;
