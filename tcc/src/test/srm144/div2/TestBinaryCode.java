@@ -87,4 +87,35 @@ public class TestBinaryCode {
 
 		assertEquals(expected, result);
 	}
+
+	/**
+	 * 
+	 */
+	@Test
+	public final void testDecode2() {
+		final BinaryCode binaryCode = new BinaryCode();
+
+		final String seed = "22111";
+
+		final String[] expected = { "NONE", "11001" };
+		final String[] result = binaryCode.decode(seed);
+
+		assertArrayEquals(expected, result);
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	public final void testDecode3() {
+		final BinaryCode binaryCode = new BinaryCode();
+
+		final String seed = "123210120";
+
+		final String[] expected = { "NONE", "NONE" };
+		final String[] result = binaryCode.decode(seed);
+
+		assertArrayEquals(expected, result);
+	}
+
 }

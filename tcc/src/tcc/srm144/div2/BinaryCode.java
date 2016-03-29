@@ -19,7 +19,10 @@ public class BinaryCode {
 	 *         the string "NONE" in its place.
 	 */
 	public final String[] decode(final String message) {
-		final String[] result = { "011100011", "NONE" };
+		final String[] result = new String[2];
+
+		result[0] = decodeAssumeZero(message);
+		result[1] = decodeAssumeOne(message);
 
 		return result;
 	}
@@ -48,7 +51,7 @@ public class BinaryCode {
 					"decryptedMessage: " + decryptedMessage.toString());
 			System.out.println(
 					"left " + left + " now " + now + " right " + right);
-			if (right < now) {
+			if (right < 0) {
 				decryptedMessage = new StringBuffer("NONE");
 				break;
 			} else {
@@ -81,7 +84,7 @@ public class BinaryCode {
 			int encryptedInt = Character
 					.getNumericValue(encryptedMessage[current]);
 			right = encryptedInt - left - now;
-			if (right < now) {
+			if (right < 0) {
 				decryptedMessage = new StringBuffer("NONE");
 				break;
 			} else {
