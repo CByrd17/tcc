@@ -21,8 +21,8 @@ public class BinaryCode {
 	public final String[] decode(final String message) {
 		final String[] result = new String[2];
 
-		result[0] = decodeAssumeZero(message);
-		result[1] = decodeAssumeOne(message);
+		result[0] = decodeWithAssumption(message, "0");
+		result[1] = decodeWithAssumption(message, "1");
 
 		return result;
 	}
@@ -30,65 +30,33 @@ public class BinaryCode {
 	/**
 	 * @param message
 	 *            contains an encrypted string
-	 * @return the decrypted string assuming the first character is '0'. If
+	 * @param assumption
+	 *            either "0" or "1"
+	 * @return the decrypted string assuming the first character is as given. If
 	 *         string is impossibly constructed based on the assumption, return
 	 *         the string "NONE" in its place.
 	 */
-	public final String decodeAssumeZero(final String message) {
-		StringBuffer decryptedMessage = new StringBuffer("0");
+	public final String decodeWithAssumption(final String message,
+			final String assumption) {
+		final StringBuffer none = new StringBuffer("NONE");
+		StringBuffer decryptedMessage = new StringBuffer(assumption);
 		int left = 0;
-		int now = 0;
+		int now = Integer.parseInt(assumption);
 		int right = -1;
 
-		char[] encryptedMessage = message.toCharArray();
+		final char[] encryptedMessage = message.toCharArray();
 
-		for (int current = 0; current < message.length() - 1; current++) {
-			int encryptedInt = Character
+		for (int current = 0; current < message.length(); current++) {
+			final int encryptedInt = Character
 					.getNumericValue(encryptedMessage[current]);
 			right = encryptedInt - left - now;
-			System.out.println("message " + message);
-			System.out.println(
-					"decryptedMessage: " + decryptedMessage.toString());
-			System.out.println(
-					"left " + left + " now " + now + " right " + right);
-			if (right < 0) {
-				decryptedMessage = new StringBuffer("NONE");
+			if (right < 0 || right > 1 || encryptedInt != left + right + now) {
+				decryptedMessage = none;
 				break;
 			} else {
-				decryptedMessage.append(right);
-				left = now;
-				now = right;
-				right = -1;
-			}
-		}
-
-		return decryptedMessage.toString();
-	}
-
-	/**
-	 * @param message
-	 *            contains an encrypted string
-	 * @return the decrypted string assuming the first character is '1'. If
-	 *         string is impossibly constructed based on the assumption, return
-	 *         the string "NONE" in its place.
-	 */
-	public final String decodeAssumeOne(final String message) {
-		StringBuffer decryptedMessage = new StringBuffer("1");
-		int left = 0;
-		int now = 1;
-		int right = -1;
-
-		char[] encryptedMessage = message.toCharArray();
-
-		for (int current = 0; current < message.length() - 1; current++) {
-			int encryptedInt = Character
-					.getNumericValue(encryptedMessage[current]);
-			right = encryptedInt - left - now;
-			if (right < 0) {
-				decryptedMessage = new StringBuffer("NONE");
-				break;
-			} else {
-				decryptedMessage.append(right);
+				if (current + 1 != message.length()) {
+					decryptedMessage.append(right);
+				}
 				left = now;
 				now = right;
 				right = -1;

@@ -36,9 +36,11 @@ public class TestBinaryCode {
 		final BinaryCode binaryCode = new BinaryCode();
 
 		final String seed = "123210122";
+		final String assumptionSeed = "0";
 
 		final String expected = "011100011";
-		final String result = binaryCode.decodeAssumeZero(seed);
+		final String result = binaryCode.decodeWithAssumption(seed,
+				assumptionSeed);
 
 		assertEquals(expected, result);
 	}
@@ -51,10 +53,11 @@ public class TestBinaryCode {
 		final BinaryCode binaryCode = new BinaryCode();
 
 		final String seed = "123210122";
+		final String assumptionSeed = "1";
 
 		final String expected = "NONE";
-		final String result = binaryCode.decodeAssumeOne(seed);
-
+		final String result = binaryCode.decodeWithAssumption(seed,
+				assumptionSeed);
 		assertEquals(expected, result);
 	}
 
@@ -81,9 +84,11 @@ public class TestBinaryCode {
 		final BinaryCode binaryCode = new BinaryCode();
 
 		final String seed = "11";
+		final String assumptionSeed = "0";
 
 		final String expected = "01";
-		final String result = binaryCode.decodeAssumeZero(seed);
+		final String result = binaryCode.decodeWithAssumption(seed,
+				assumptionSeed);
 
 		assertEquals(expected, result);
 	}
@@ -113,6 +118,70 @@ public class TestBinaryCode {
 		final String seed = "123210120";
 
 		final String[] expected = { "NONE", "NONE" };
+		final String[] result = binaryCode.decode(seed);
+
+		assertArrayEquals(expected, result);
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	public final void testDecodeAssumeZero3() {
+		final BinaryCode binaryCode = new BinaryCode();
+
+		final String seed = "123210120";
+		final String assumptionSeed = "0";
+
+		final String expected = "NONE";
+		final String result = binaryCode.decodeWithAssumption(seed,
+				assumptionSeed);
+
+		assertEquals(expected, result);
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	public final void testDecodeAssumeOne3() {
+		final BinaryCode binaryCode = new BinaryCode();
+
+		final String seed = "123210120";
+		final String assumptionSeed = "1";
+
+		final String expected = "NONE";
+		final String result = binaryCode.decodeWithAssumption(seed,
+				assumptionSeed);
+		assertEquals(expected, result);
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	public final void testDecode4() {
+		final BinaryCode binaryCode = new BinaryCode();
+
+		final String seed = "3";
+
+		final String[] expected = { "NONE", "NONE" };
+		final String[] result = binaryCode.decode(seed);
+
+		assertArrayEquals(expected, result);
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	public final void testDecode5() {
+		final BinaryCode binaryCode = new BinaryCode();
+
+		final String seed = "12221112222221112221111111112221111";
+
+		final String[] expected = { "01101001101101001101001001001101001",
+				"10110010110110010110010010010110010" };
 		final String[] result = binaryCode.decode(seed);
 
 		assertArrayEquals(expected, result);
