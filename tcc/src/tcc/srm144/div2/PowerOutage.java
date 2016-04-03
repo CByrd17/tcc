@@ -6,29 +6,28 @@ package tcc.srm144.div2;
 import java.util.ArrayList;
 import java.util.List;
 
-import tcc.srm144.div2.PowerOutage.Node;
-
 /**
  * @author cbyrd17
  *
  */
 public class PowerOutage {
 
-	class Node<T> {
+	public class Node<T> {
 		private T name;
 		private int distanceFromParent;
 		private Node<T> parent;
 		private List<Node<T>> children;
+		private boolean checked = false;
 
 		Node(final T nameToUse, final Node<T> parentToUse,
 				final int distance) {
 			name = nameToUse;
 			parent = parentToUse;
 			distanceFromParent = distance;
-			children = new ArrayList<Node<T>>();
+			children = new ArrayList<>();
 		}
 
-		public Node<T> find(T nameToFind) {
+		public Node<T> find(final T nameToFind) {
 			Node<T> found = null;
 			if (name.equals(nameToFind)) {
 				found = this;
@@ -40,8 +39,40 @@ public class PowerOutage {
 						break;
 					}
 				}
+				if (found == null && this.parent != null) {
+					found = parent.find(nameToFind);
+				}
 			}
 			return found;
+		}
+
+		public List<Node<T>> route(final T nameToFind) {
+			List<Node<T>> route = new ArrayList<>();
+			List<Node<T>> potentialRoute = new ArrayList<>();
+			if (!name.equals(nameToFind)) {
+				for (Node<T> child : children) {
+					if (!child.checked) {
+						potentialRoute = child.route(nameToFind);
+						if (!potentialRoute.isEmpty()) {
+							route.add(this);
+							route.addAll(potentialRoute);
+							break;
+						} else {
+							child.checked = true;
+						}
+					}
+				}
+				if (potentialRoute.isEmpty() && this.parent != null) {
+					potentialRoute = parent.route(nameToFind);
+					if (!potentialRoute.isEmpty()) {
+						route.add(this);
+						route.addAll(potentialRoute);
+					}
+				}
+			} else {
+				route.add(this);
+			}
+			return route;
 		}
 
 		public void addChild(Node<T> nodeToAdd) {
@@ -63,7 +94,7 @@ public class PowerOutage {
 		 * @see java.lang.Object#toString()
 		 */
 		public String toString(int depth) {
-			StringBuffer sb = new StringBuffer(name.toString());
+			StringBuilder sb = new StringBuilder(name.toString());
 
 			boolean moreChildren = true;
 
@@ -121,15 +152,24 @@ public class PowerOutage {
 	 */
 	public final int estimateTimeOut(final int[] fromJunction,
 			final int[] toJunction, final int[] ductLength) {
-		Node<Integer> root = new Node<Integer>(0, null, 0);
+		Node<Integer> root = new Node<>(0, null, 0);
 		for (int current = 0; current < fromJunction.length; current++) {
 			Node<Integer> parent = root.find(fromJunction[current]);
-			Node<Integer> child = new Node<Integer>(toJunction[current],
-					parent, ductLength[current]);
+			Node<Integer> child = new Node<>(toJunction[current], parent,
+					ductLength[current]);
 			parent.addChild(child);
 		}
 
 		System.out.println(root.toString(0));
+		final int routeFrom = 2;
+		final int routeTo = 0;
+		final Node<Integer> start = root.find(routeFrom);
+		final List<Node<Integer>> route = start.route(routeTo);
+		System.out.print("Route from " + routeFrom + " to " + routeTo + ": ");
+		for (Node<Integer> current : route) {
+			System.out.print(current.name + ",");
+		}
+		System.out.println();
 
 		return 10;
 	}
