@@ -27,20 +27,30 @@ public class PowerOutage {
 			children = new ArrayList<>();
 		}
 
-		public Node<T> find(final T nameToFind) {
+		public Node<T> getRootOfTree() {
+			Node<T> root = this;
+			if (this.parent != null) {
+				root = parent.getRootOfTree();
+			}
+			return root;
+		}
+
+		public Node<T> find(final Node<T> root, final T nameToFind) {
+			System.out.println(
+					"Finding " + nameToFind + " currently at " + name);
 			Node<T> found = null;
 			if (name.equals(nameToFind)) {
-				found = this;
+				found = root;
 			} else {
 				for (Node<T> child : children) {
-					Node<T> foundOne = child.find(nameToFind);
+					Node<T> foundOne = child.find(this, nameToFind);
 					if (foundOne != null) {
 						found = foundOne;
 						break;
 					}
 				}
 				if (found == null && this.parent != null) {
-					found = parent.find(nameToFind);
+					found = parent.find(this, nameToFind);
 				}
 			}
 			return found;
@@ -49,16 +59,25 @@ public class PowerOutage {
 		public List<Node<T>> route(final T nameToFind) {
 			List<Node<T>> route = new ArrayList<>();
 			List<Node<T>> potentialRoute = new ArrayList<>();
+			System.out.println(
+					"Trying to find route from " + name + " to " + nameToFind);
 			if (!name.equals(nameToFind)) {
-				for (Node<T> child : children) {
-					if (!child.checked) {
-						potentialRoute = child.route(nameToFind);
-						if (!potentialRoute.isEmpty()) {
-							route.add(this);
-							route.addAll(potentialRoute);
-							break;
+				if (children.isEmpty()) {
+					this.checked = true;
+				} else {
+					for (Node<T> child : children) {
+						if (!child.checked) {
+							potentialRoute = child.route(nameToFind);
+							if (!potentialRoute.isEmpty()) {
+								route.add(this);
+								route.addAll(potentialRoute);
+								break;
+							} else {
+								child.checked = true;
+							}
 						} else {
-							child.checked = true;
+							System.out.println(child.name
+									+ "has been checked: " + child.checked);
 						}
 					}
 				}
@@ -154,7 +173,7 @@ public class PowerOutage {
 			final int[] toJunction, final int[] ductLength) {
 		Node<Integer> root = new Node<>(0, null, 0);
 		for (int current = 0; current < fromJunction.length; current++) {
-			Node<Integer> parent = root.find(fromJunction[current]);
+			Node<Integer> parent = find(fromJunction[current]);
 			Node<Integer> child = new Node<>(toJunction[current], parent,
 					ductLength[current]);
 			parent.addChild(child);
@@ -164,6 +183,7 @@ public class PowerOutage {
 		final int routeFrom = 2;
 		final int routeTo = 0;
 		final Node<Integer> start = root.find(routeFrom);
+		System.out.println("Found this one: " + start.name);
 		final List<Node<Integer>> route = start.route(routeTo);
 		System.out.print("Route from " + routeFrom + " to " + routeTo + ": ");
 		for (Node<Integer> current : route) {
